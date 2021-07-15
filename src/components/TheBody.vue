@@ -224,15 +224,17 @@ h3 {
   margin: 20px 0;
   line-height: 40px;
 }
+
 .the-body {
   width: 100%;
-  max-width: 1200px;
+  padding: 0 20px;
+  max-width: 1280px;
   display: inline-block;
   min-height: calc(100vh - 128px);
 }
 
 .the-body-content {
-  margin: 60px 0 0 0;
+  margin: 20px 0 20px 0;
   text-align: left;
 }
 
