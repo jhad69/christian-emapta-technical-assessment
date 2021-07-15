@@ -1,15 +1,15 @@
 <template>
   <div>
     <md-dialog
-      :md-active.sync="showAddDialog"
+      :md-active.sync="showEditDialog"
       :md-close-on-esc="false"
       :md-click-outside-to-close="false"
-      class="add-dialog"
+      class="edit-dialog"
     >
-      <form novalidate class="md-layout" @submit.prevent="validateAddData">
+      <form novalidate class="md-layout" @submit.prevent="validateEditData">
         <md-card class="md-layout-item md-size-100">
           <md-card-header>
-            <div class="md-title">Add data</div>
+            <div class="md-title">Edit data</div>
           </md-card-header>
 
           <md-card-content>
@@ -35,7 +35,7 @@
                 name="title"
                 id="title"
                 v-model="formData.title"
-                :disabled="isAdding"
+                :disabled="isEditing"
                 maxlength="100"
               />
               <span class="md-error" v-if="!$v.formData.title.required"
@@ -53,7 +53,7 @@
                 id="description"
                 v-model="formData.description"
                 md-counter="500"
-                :disabled="isAdding"
+                :disabled="isEditing"
               />
               <span class="md-error" v-if="!$v.formData.description.required"
                 >The description is required</span
@@ -66,7 +66,7 @@
             </md-field>
           </md-card-content>
 
-          <md-progress-bar md-mode="indeterminate" v-if="isAdding" />
+          <md-progress-bar md-mode="indeterminate" v-if="isEditing" />
 
           <md-card-actions class="md-card-actions md-alignment-right">
             <md-button type="submit" class="md-primary" @click="close()"
@@ -75,8 +75,8 @@
             <md-button
               type="submit"
               class="md-primary md-raised"
-              :disabled="isAdding"
-              >Add</md-button
+              :disabled="isEditing"
+              >Edit</md-button
             >
           </md-card-actions>
         </md-card>
@@ -86,8 +86,8 @@
     <md-snackbar
       md-position="center"
       :md-duration="3000"
-      :md-active.sync="dataAdded"
-      >Successfully added into {{ formData.type }}.</md-snackbar
+      :md-active.sync="dataEdited"
+      >Successfully updated the record.</md-snackbar
     >
   </div>
 </template>
@@ -97,11 +97,15 @@ import db from "../../firebase/firebaseInit";
 import { validationMixin } from "vuelidate";
 import { required, minLength } from "vuelidate/lib/validators";
 export default {
-  name: "AddDialog",
+  name: "Edit",
   mixins: [validationMixin],
   props: {
-    showAddDialog: {
+    showEditDialog: {
       type: Boolean,
+      required: true,
+    },
+    data: {
+      type: Object,
       required: true,
     },
     type: {
@@ -111,8 +115,8 @@ export default {
   },
   data() {
     return {
-      isAdding: false,
-      dataAdded: false,
+      isEditing: false,
+      dataEdited: false,
       formData: {
         type: "values",
         title: "",
@@ -121,9 +125,11 @@ export default {
     };
   },
   watch: {
-    type: function (newType) {
-      if (newType != this.formData.type) {
-        this.formData.type = newType;
+    data: function (newData, oldData) {
+      if (newData.id != oldData.id) {
+        this.formData.type = this.type;
+        this.formData.title = newData.title;
+        this.formData.description = newData.description;
       }
     },
   },
@@ -145,16 +151,15 @@ export default {
   methods: {
     close() {
       this.$emit("close", false);
-      this.clearForm();
     },
-    async validateAddData() {
+    async validateEditData() {
       this.$v.$touch();
 
       if (!this.$v.$invalid) {
-        await this.addData();
+        await this.editData();
       }
     },
-    addData() {
+    editData() {
       if (this.type != "values" && this.type != "principles") {
         return;
       }
@@ -162,16 +167,16 @@ export default {
         return;
       }
 
-      this.isAdding = true;
+      this.isEditing = true;
       const collection = this.type;
       db.collection(collection)
-        .add({
+        .doc(this.data.id)
+        .update({
           title: this.formData.title,
           description: this.formData.description,
-          dateAdded: new Date(),
         })
         .then(() => {
-          this.dataAdded = true;
+          this.dataEdited = true;
           this.$emit("refresh", this.type);
           this.close();
         })
@@ -179,7 +184,7 @@ export default {
           console.log(error);
         })
         .finally(() => {
-          this.isAdding = false;
+          this.isEditing = false;
         });
     },
     getValidationClass(fieldName) {
@@ -191,17 +196,12 @@ export default {
         };
       }
     },
-    clearForm() {
-      this.$v.$reset();
-      this.formData.title = "";
-      this.formData.description = "";
-    },
   },
 };
 </script>
 
 <style>
-.add-dialog .md-dialog-container {
+.edit-dialog .md-dialog-container {
   min-width: 40%;
 }
 </style>

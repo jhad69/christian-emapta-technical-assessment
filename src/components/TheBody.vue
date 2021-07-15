@@ -15,7 +15,8 @@
             <span>Values </span>
             <md-button
               class="md-icon-button md-primary"
-              @click="showAddDialog ? null() : clickShowAddDialog('values')"
+              :disabled="showAddDialog"
+              @click="clickShowAddDialog('values')"
             >
               <md-icon>add</md-icon>
             </md-button>
@@ -25,10 +26,18 @@
               <li v-for="value in sampleDataValues" v-bind:key="value.id">
                 <h3>
                   {{ value.title }}
-                  <md-button class="md-icon-button md-primary">
+                  <md-button
+                    class="md-icon-button md-primary"
+                    :disabled="showEditDialog"
+                    @click="clickShowEditDialog(value, 'values')"
+                  >
                     <md-icon>edit</md-icon>
                   </md-button>
-                  <md-button class="md-icon-button md-accent">
+                  <md-button
+                    class="md-icon-button md-accent"
+                    :disabled="showDeleteDialog"
+                    @click="clickShowDeleteDialog(value, 'values')"
+                  >
                     <md-icon>delete</md-icon>
                   </md-button>
                 </h3>
@@ -44,7 +53,8 @@
             <span>Principles </span>
             <md-button
               class="md-icon-button md-primary"
-              @click="showAddDialog ? null() : clickShowAddDialog('principles')"
+              :disabled="showAddDialog"
+              @click="clickShowAddDialog('principles')"
             >
               <md-icon>add</md-icon>
             </md-button>
@@ -57,10 +67,18 @@
               >
                 <h3>
                   {{ principle.title }}
-                  <md-button class="md-icon-button md-primary">
+                  <md-button
+                    class="md-icon-button md-primary"
+                    :disabled="showEditDialog"
+                    @click="clickShowEditDialog(principle, 'principles')"
+                  >
                     <md-icon>edit</md-icon>
                   </md-button>
-                  <md-button class="md-icon-button md-accent">
+                  <md-button
+                    class="md-icon-button md-accent"
+                    :disabled="showDeleteDialog"
+                    @click="clickShowDeleteDialog(principle, 'principles')"
+                  >
                     <md-icon>delete</md-icon>
                   </md-button>
                 </h3>
@@ -79,22 +97,44 @@
       @close="closeAddDialog"
       @refresh="refreshData"
     />
+    <Edit
+      :showEditDialog="showEditDialog"
+      :type="selectedDataType"
+      :data="selectedData"
+      @close="closeEditDialog"
+      @refresh="refreshData"
+    />
+    <Delete
+      :showDeleteDialog="showDeleteDialog"
+      :data="selectedData"
+      :type="selectedDataType"
+      @closeDeleteDialog="closeDeleteDialog"
+      @refresh="refreshData"
+    />
   </div>
 </template>
 
 <script>
 import db from "../firebase/firebaseInit";
 import Add from "./Dialog/Add.vue";
+import Edit from "./Dialog/Edit.vue";
+import Delete from "./Dialog/Delete.vue";
 export default {
   name: "TheBody",
   components: {
     Add,
+    Edit,
+    Delete,
   },
   data() {
     return {
       isFetching: true,
       showAddDialog: false,
+      showDeleteDialog: false,
+      showEditDialog: false,
       addDialogType: "values",
+      selectedData: {},
+      selectedDataType: "values",
       sampleDataValues: [],
       sampleDataPrinciples: [],
     };
@@ -107,9 +147,24 @@ export default {
     closeAddDialog() {
       this.showAddDialog = false;
     },
+    clickShowDeleteDialog(data, type) {
+      this.selectedData = data;
+      this.selectedDataType = type;
+      this.showDeleteDialog = true;
+    },
+    closeDeleteDialog() {
+      this.showDeleteDialog = false;
+    },
+    clickShowEditDialog(data, type) {
+      this.selectedData = data;
+      this.selectedDataType = type;
+      this.showEditDialog = true;
+    },
+    closeEditDialog() {
+      this.showEditDialog = false;
+    },
+
     async refreshData(type) {
-      console.log("refreshData");
-      console.log(type);
       if (type == "values" || type == "all") {
         this.isRefreshingValues = true;
         await this.getDataFromCollection("values");
