@@ -12,9 +12,8 @@ npm run serve
 ```
 
 ### Live Demo 
-```
-Click this link to proceed to the [demo](https://emapta-technical-assessment.web.app/)
-```
+Click this link to proceed to the [demo](https://emapta-technical-assessment.web.app/).
+
 
 
 
