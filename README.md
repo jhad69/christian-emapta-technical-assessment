@@ -1,24 +1,21 @@
 # emapta-technical-assessment
 
-## Project setup
+## How To Run This Application Locally
+Install all dependencies by running: 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+Run the application locally:
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Live Demo 
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+https://emapta-technical-assessment.web.app/
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+
