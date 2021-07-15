@@ -73,7 +73,7 @@
         </div>
       </div>
     </div>
-    <AddDialog
+    <Add
       :showAddDialog="showAddDialog"
       :type="addDialogType"
       @close="closeAddDialog"
@@ -84,11 +84,11 @@
 
 <script>
 import db from "../firebase/firebaseInit";
-import AddDialog from "./Dialog/AddDialog.vue";
+import Add from "./Dialog/Add.vue";
 export default {
   name: "TheBody",
   components: {
-    AddDialog,
+    Add,
   },
   data() {
     return {
