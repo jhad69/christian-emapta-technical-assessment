@@ -3,7 +3,7 @@
 ## How To Run This Application Locally
 IMPORTANT: Send me an email to request access for this project in firebase and ask me for the ENV file for the firestore database configuration.
 
-Create the .env file... This will be sent via email.
+Create the .env file at the root of the project... This will be sent via email.
 
 Install all dependencies by running: 
 ```
