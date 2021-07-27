@@ -44,6 +44,7 @@ npm run deploy
 Click this link to proceed to the [demo](https://emapta-technical-assessment.web.app/).
 
 For more questions/inquiries, please contact me through my e-mail. 
+
 Email: christianlouismingo@gmail.com
 
 
