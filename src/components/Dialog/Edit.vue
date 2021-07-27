@@ -133,6 +133,13 @@ export default {
         this.formData.description = newData.description;
       }
     },
+    showEditDialog: function (newData) {
+      if (newData) {
+        this.formData.type = this.type;
+        this.formData.title = this.data.title;
+        this.formData.description = this.data.description;
+      }
+    },
   },
   validations: {
     formData: {
