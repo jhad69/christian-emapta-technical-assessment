@@ -1,9 +1,9 @@
 export default {
-    apiKey: "AIzaSyB5J1VCnehED66nA01RCaNEgQqadVnwMUU",
-    authDomain: "emapta-technical-assessment.firebaseapp.com",
-    projectId: "emapta-technical-assessment",
-    storageBucket: "emapta-technical-assessment.appspot.com",
-    messagingSenderId: "517149525650",
-    appId: "1:517149525650:web:fddf4711c6e4853e43c84b",
-    measurementId: "G-3T1Z3KKD6T"
+    apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+    authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.VUE_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.VUE_APP_FIREBASE_APP_ID,
+    measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
 }
