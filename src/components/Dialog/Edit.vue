@@ -69,12 +69,12 @@
           <md-progress-bar md-mode="indeterminate" v-if="isEditing" />
 
           <md-card-actions class="md-card-actions md-alignment-right">
-            <md-button type="submit" class="md-primary" @click="close()"
+            <md-button type="button" class="edit-cancel-button md-primary" @click="close()"
               >Cancel</md-button
             >
             <md-button
               type="submit"
-              class="md-primary md-raised"
+              class="edit-submit-button md-primary md-raised"
               :disabled="isEditing"
               >Edit</md-button
             >
@@ -84,6 +84,7 @@
     </md-dialog>
 
     <md-snackbar
+      class="edit-dialog-snackbar"
       md-position="center"
       :md-duration="3000"
       :md-active.sync="dataEdited"

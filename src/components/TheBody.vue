@@ -158,6 +158,7 @@ export default {
     clickShowEditDialog(data, type) {
       this.selectedData = data;
       this.selectedDataType = type;
+      console.log(data);
       this.showEditDialog = true;
     },
     closeEditDialog() {
