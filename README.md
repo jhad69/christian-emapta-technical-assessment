@@ -1,6 +1,8 @@
 # emapta-technical-assessment
 
 ## How To Run This Application Locally
+IMPORTANT: Send me an email to request access for this project in firebase and ask me for the ENV file for the firestore database configuration.
+
 Install all dependencies by running: 
 ```
 npm install
@@ -29,7 +31,7 @@ After successfully logging in to firebase account and choosing the correct fireb
 npm run deploy
 ```
 
-## How To Get the Access Keys and configuration of firestore database 
+## How To Get the Access Keys and configuration in the firestore database 
 1. Log in to the firebase [console](https://console.firebase.google.com/) choose the correct project (send me an E-mail and I will grant you access to the project).
 
 2. Go to Project Settings
